@@ -15,15 +15,19 @@ def emotion_detect():
     out = "For the given statement, the system response is "
     DOMINANT_EMOTION_KEY = "dominant_emotion"
 
-    for emotion_key in response.keys():
-        if emotion_key == DOMINANT_EMOTION_KEY:
-            dominant_emotion_value = response[emotion_key]
-        else:
-            out = out + "'" + emotion_key + "': " + str(response[emotion_key]) + ", "
-    
-    #replace last comma with period
-    out = out[:out.rfind(",")] + "."        
-    out = out + " The dominant emotion is " + "<b>" + dominant_emotion_value + "</b>" + "."
+    # error handling
+    if response[DOMINANT_EMOTION_KEY] is not None:
+        for emotion_key in response.keys():
+            if emotion_key == DOMINANT_EMOTION_KEY:
+                dominant_emotion_value = response[emotion_key]
+            else:
+                out = out + "'" + emotion_key + "': " + str(response[emotion_key]) + ", "
+        
+        #replace last comma with period
+        out = out[:out.rfind(",")] + "."        
+        out = out + " The dominant emotion is " + "<b>" + dominant_emotion_value + "</b>" + "."
+    else:
+        out = "Invalid text! Please try again!"
     
     return out
 
